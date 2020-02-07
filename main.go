@@ -4,11 +4,17 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"time"
 )
 
 var errRequestFailed = errors.New("Request Failed!")
 
 func main() {
+	go sexyCount("Baby")
+	go sexyCount("Tiger")
+
+	time.Sleep(time.Second * 5)
+
 	var results = make(map[string]string)
 	urls := []string{
 		"https://www.airbnb.com/",
@@ -44,4 +50,11 @@ func hitURL(url string) error {
 		return errRequestFailed
 	}
 	return nil
+}
+
+func sexyCount(person string) {
+	for i := 0; i < 10; i++ {
+		fmt.Println(person, "is sexy", i)
+		time.Sleep(time.Second)
+	}
 }
