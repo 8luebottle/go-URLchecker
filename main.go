@@ -11,13 +11,14 @@ var errRequestFailed = errors.New("Request Failed!")
 
 func main() {
 	// Testing Go Channel
-	c := make(chan bool)
-	people := [2]string{"Baby", "Tiger"}
+	c := make(chan string)
+	people := [5]string{"Baby", "Tiger", "8luebottle", "Blue", "She"}
 	for _, person := range people {
 		go isSexy(person, c)
 	}
-	result := <-c // Receive it from isSexy
-	fmt.Println(result)
+	for i := 0; i < len(people); i++ {
+		fmt.Println(<-c) //  Loop : len(people)
+	}
 
 	var results = make(map[string]string)
 	urls := []string{
@@ -56,8 +57,7 @@ func hitURL(url string) error {
 	return nil
 }
 
-func isSexy(person string, c chan bool) {
-	time.Sleep(time.Second * 5)
-	fmt.Println(person)
-	c <- true // Send "true" to the Channel c
+func isSexy(person string, c chan string) {
+	time.Sleep(time.Second * 10)
+	c <- person + " is Sexy" // Send "true" to the Channel c
 }
